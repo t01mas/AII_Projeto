@@ -1,20 +1,29 @@
 #include <SPI.h>
 #include <MFRC522.h>
 #include <time.h>
-#include <WiFiClient.h> 
+#include <WiFiUdp.h> 
+#include <WiFi.h>
+#include <NTPClient.h>
+#include "secrets.h"
 
 #define SS_PIN  5
 #define RST_PIN 0
 
+// Variavel para armazenar a data e hora
+String timeStamp;
+
 MFRC522 mfrc522(SS_PIN, RST_PIN);
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
 
 void setup() {
   Serial.begin(115200);
 
-  Serial.print("Conectando ao WiFi...");
+  Serial.print("A Ligar ao WiFi...");
 
   //trocar para os dados do Wifi disponivel
-  WiFi.begin("", ""); 
+  WiFi.begin(SECRET_SSID, SECRET_PASS); 
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);Serial.print(".");
@@ -23,11 +32,13 @@ void setup() {
   Serial.println("Conectado ao WiFi com sucesso!");
   Serial.println(WiFi.localIP()); 
 
+  timeClient.begin();
+  timeClient.setTimeOffset(3600);
+
   SPI.begin();
   mfrc522.PCD_Init();
 
   Serial.println("Aproxima uma tag do leitor RFID.");
-
 }
 
 void loop() {
@@ -36,7 +47,7 @@ void loop() {
     return;
   }
 
-  // Tenta ler os dados da tag
+  // Ler os dados da tag
   if (!mfrc522.PICC_ReadCardSerial()) {
     return;
   }
@@ -44,7 +55,6 @@ void loop() {
   Serial.print("Tag detetada! UID:");
 
   String tagUID = "";
-  // O UID normalmente tem 4 bytes, este loop extrai-os
   for (byte i = 0; i < mfrc522.uid.size; i++) {
     tagUID.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
     tagUID.concat(String(mfrc522.uid.uidByte[i], HEX));
