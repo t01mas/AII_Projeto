@@ -5,11 +5,11 @@
 #include <WiFi.h>
 #include <NTPClient.h>
 #include "secrets.h"
+#include <PubSubClient.h>
 
 #define SS_PIN  5
 #define RST_PIN 0
 
-// Variavel para armazenar a data e hora
 String timeStamp;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
@@ -17,19 +17,36 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 
+// Variáveis GLOBAIS para o MQTT
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+void reconnect() {
+  while (!client.connected()) {
+    Serial.print("A tentar conectar ao MQTT...");
+    if (client.connect("ESP32_RFID_Client")) {
+      Serial.println("Conectado ao servidor MQTT!");
+    } else {
+      Serial.print("Erro a conectar: ");
+      Serial.print(client.state());
+      Serial.println(" Nova tentativa em 5s...");
+      delay(5000);
+    }
+  }
+}
+
 void setup() {
   Serial.begin(115200);
 
   Serial.print("A Ligar ao WiFi...");
-
-  //trocar para os dados do Wifi disponivel
   WiFi.begin(SECRET_SSID, SECRET_PASS); 
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);Serial.print(".");
+    delay(1000);
+    Serial.print(".");
   }
 
-  Serial.println("Conectado ao WiFi com sucesso!");
+  Serial.println("\nConectado ao WiFi com sucesso!");
   Serial.println(WiFi.localIP()); 
 
   timeClient.begin();
@@ -38,10 +55,19 @@ void setup() {
   SPI.begin();
   mfrc522.PCD_Init();
 
+  client.setServer(SECRET_mqtt_broker, SECRET_mqtt_port);
+
   Serial.println("Aproxima uma tag do leitor RFID.");
 }
 
 void loop() {
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop(); 
+
+  timeClient.update();
+  
   // Verifica se há uma nova tag próxima ao leitor
   if (!mfrc522.PICC_IsNewCardPresent()) {
     return;
@@ -52,7 +78,10 @@ void loop() {
     return;
   }
 
-  Serial.print("Tag detetada! UID:");
+  timeStamp = timeClient.getEpochTime();
+  Serial.print("[");
+  Serial.print(timeStamp);
+  Serial.print("] Tag detetada! UID: ");
 
   String tagUID = "";
   for (byte i = 0; i < mfrc522.uid.size; i++) {
@@ -61,9 +90,16 @@ void loop() {
   }
 
   tagUID.toUpperCase();
-  // Imprime o UID a partir do primeiro caracter útil (ignora o primeiro espaço)
-  Serial.println(tagUID.substring(1));
+  String finalUID = tagUID.substring(1);
+  Serial.println(finalUID);
 
-  // Instrui a tag a parar de comunicar para não gerar leituras contínuas da mesma aproximação
+  String payload = "{\"tag\": \"" + finalUID + "\", \"timestamp\": \"" + timeStamp + "\"}";
+  
+  Serial.print("A enviar JSON: ");
+  Serial.println(payload);
+
+  client.publish("aii/projeto/rfid", payload.c_str());
+
   mfrc522.PICC_HaltA();
+  mfrc522.PCD_StopCrypto1(); 
 }

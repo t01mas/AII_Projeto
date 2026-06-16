@@ -41,7 +41,6 @@ client.on_message = on_message
 
 print("A tentar ligar ao broker...")
 client.connect("ims.mec.ua.pt", 82)
-
 try:
     client.loop_forever()
 except KeyboardInterrupt:
