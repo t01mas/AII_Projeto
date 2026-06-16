@@ -10,7 +10,7 @@
 #define SS_PIN  5
 #define RST_PIN 0
 
-String timeStamp;
+unsigned long timeStamp;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
@@ -67,7 +67,8 @@ void loop() {
   client.loop(); 
 
   timeClient.update();
-  
+
+ 
   // Verifica se há uma nova tag próxima ao leitor
   if (!mfrc522.PICC_IsNewCardPresent()) {
     return;
@@ -93,7 +94,7 @@ void loop() {
   String finalUID = tagUID.substring(1);
   Serial.println(finalUID);
 
-  String payload = "{\"tag\": \"" + finalUID + "\", \"timestamp\": \"" + timeStamp + "\"}";
+  String payload = "{\"uid\": \"" + finalUID + "\", \"timestamp\": \"" + String(timeStamp) + "\"}";
   
   Serial.print("A enviar JSON: ");
   Serial.println(payload);

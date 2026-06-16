@@ -1,5 +1,12 @@
+import os
 import paho.mqtt.client as mqtt
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BROKER = os.getenv("MQTT_BROKER", "127.0.0.1")
+PORT = int(os.getenv("MQTT_PORT", 1883))
 
 FICHEIRO_TESTE = "logs_rfid.jsonl"
 TOPICO = "aii/projeto/rfid"
@@ -40,7 +47,7 @@ client.on_connect = on_connect
 client.on_message = on_message
 
 print("A tentar ligar ao broker...")
-client.connect("ims.mec.ua.pt", 82)
+client.connect(BROKER, PORT)
 try:
     client.loop_forever()
 except KeyboardInterrupt:

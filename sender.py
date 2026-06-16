@@ -1,13 +1,19 @@
+import os
 import json
 import random
 import time
 import paho.mqtt.client as mqtt
+from dotenv import load_dotenv
 
+load_dotenv()
+
+BROKER = os.getenv("MQTT_BROKER", "127.0.0.1")
+PORT = int(os.getenv("MQTT_PORT", 1883))
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "SimuladorRFID")
 
 print("A ligar ao Broker MQTT local...")
-client.connect("ims.mec.ua.pt", 82)
+client.connect(BROKER, PORT)
 
 topico = "aii/projeto/rfid"
 print(f"A publicar em '{topico}'...\n")
@@ -40,4 +46,3 @@ except KeyboardInterrupt:
 finally:
     client.disconnect()
     print("Desligado do Broker MQTT.")
-
