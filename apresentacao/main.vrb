@@ -3,21 +3,21 @@
       \begin{column}{0.48\textwidth}
         \begin{block}{Payload do ESP32 (hardware)}
           \begin{lstlisting}[style=json]
-            {
-              "uid": "A1 B2 C3 D4",
-              "timestamp": "1748900000"
-            }
+{
+  "dispositivo": "Esp32",
+  "uid": "A1 B2 C3 D4",
+  "timestamp": "1748900000"
+}
           \end{lstlisting}
         \end{block}
         \vspace{0.4em}
         \begin{block}{Payload do Simulador Python}
           \begin{lstlisting}[style=json]
-            {
-              "dispositivo": "Esp32",
-              "uid": "A1B2C3D4",
-              "status": "lido",
-              "timestamp": 1748900000
-            }
+{
+  "dispositivo": "Esp32",
+  "uid": "A1B2C3D4",
+  "timestamp": 1748900000
+}
           \end{lstlisting}
         \end{block}
       \end{column}

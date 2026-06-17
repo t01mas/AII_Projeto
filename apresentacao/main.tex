@@ -82,7 +82,9 @@
   breaklines=true, frame=none, numbers=none,
   showstringspaces=false,
   morestring=[b]"
-}% ─── Navegação ────────────────────────────────────────────────────────────────
+}
+
+% ─── Navegação ────────────────────────────────────────────────────────────────
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[frame number]
 
@@ -97,7 +99,7 @@
 \begin{document}
 
 %──────────────────────────────────────────────────────────────────────────────
-% SLIDE 1: T\'ItULO
+% SLIDE 1: TÍTULO
 %──────────────────────────────────────────────────────────────────────────────
 \begin{frame}
   \titlepage
@@ -242,25 +244,25 @@
   \end{frame}
 
   %──────────────────────────────────────────────────────────────────────────────
-  \section{Firmware ESP32}
+  \section{Programa ESP32}
   %──────────────────────────────────────────────────────────────────────────────
-  \begin{frame}[fragile]{Firmware ESP32 -- Leitura e Publica\c{c}\~{a}o}
+  \begin{frame}[fragile]{Programa ESP32 -- Leitura e Publica\c{c}\~{a}o}
     \begin{columns}[T]
       \begin{column}{0.55\textwidth}
         \begin{block}{Excerto do Loop Principal}
           \begin{lstlisting}[style=cpp]
-            // 1. Ler e formatar UID (ex: "A1B2C3D4")
-            String tagUID = readAndFormatUID();
+// 1. Ler e formatar UID (ex: "A1B2C3D4")
+String tagUID = readAndFormatUID();
 
-            // 2. Obter Timestamp (NTP)
-            unsigned long ts = timeClient.getEpochTime();
+// 2. Obter Timestamp (NTP)
+unsigned long ts = timeClient.getEpochTime();
 
-            // 3. Construir Payload JSON
-            String payload = "{\"uid\": \"" + tagUID + 
-            "\", \"timestamp\": " + String(ts) + "}";
-
-            // 4. Publicar no Broker
-            client.publish("aii/projeto/rfid", payload.c_str());
+// 3. Construir Payload JSON
+String payload = "{\"dispositivo\" : \"Esp32\",
+    \"uid\": \"" + finalUID + "\",
+    \"timestamp\": \"" + String(timeStamp) + "\"}";
+// 4. Publicar no Broker
+client.publish("aii/projeto/rfid", payload.c_str());
           \end{lstlisting}
         \end{block}
       \end{column}
@@ -329,15 +331,15 @@
         \vspace{0.3em}
         \begin{exampleblock}{docker-compose.yml}
           \begin{lstlisting}[style=bash]
-            services:
-            mosquitto:
-            image: eclipse-mosquitto:latest
-            ports:
-            - "1883:1883"
-            volumes:
-            - ./conf/mosquitto.conf:
-            /mosquitto/config/
-            mosquitto.conf
+services:
+mosquitto:
+image: eclipse-mosquitto:latest
+ports:
+- "1883:1883"
+volumes:
+- ./conf/mosquitto.conf:
+/mosquitto/config/
+mosquitto.conf
           \end{lstlisting}
         \end{exampleblock}
       \end{column}
@@ -352,34 +354,36 @@
       \begin{column}{0.49\textwidth}
         {\color{azulP}\textbf{reciver.py}} -- Recetor MQTT
         \begin{lstlisting}[style=python]
-          def on_message(client, userdata, msg):
-          dados = json.loads(msg.payload.decode())
-          print(f"TAG LIDA: {dados.get('uid')}")
+def on_message(client, userdata, msg):
+dados = json.loads(msg.payload.decode())
+print(f"TAG LIDA: {dados.get('uid')}")
 
-          # Setup e Subscricao
-          client = mqtt.Client()
-          client.on_message = on_message
-          client.connect(BROKER, PORT)
-          client.subscribe("aii/projeto/rfid")
-          client.loop_forever()
+# Setup e Subscricao
+client = mqtt.Client()
+client.on_message = on_message
+client.connect(BROKER, PORT)
+client.subscribe("aii/projeto/rfid")
+client.loop_forever()
         \end{lstlisting}
       \end{column}
       \begin{column}{0.49\textwidth}
         {\color{laranja}\textbf{sender.py}} -- Simulador
         \begin{lstlisting}[style=python]
-          while True:
-          payload = json.dumps({
-            "uid": "A1B2C3D4",
-            "timestamp": int(time.time())
-          })
+while True:
+payload = json.dumps({
+  "dispositivo": "Esp32",
+  "uid": "A1B2C3D4",
+  "timestamp": int(time.time())
+})
 
-          client.publish("aii/projeto/rfid", payload)
-        time.sleep(random.randint(3,8))      \end{lstlisting}
+client.publish("aii/projeto/rfid", payload)
+time.sleep(random.randint(3,8))      
+        \end{lstlisting}
         \vspace{0.2em}
         \begin{exampleblock}{Configura\c{c}\~{a}o .env}
           \begin{lstlisting}[style=bash]
-            MQTT_BROKER=192.168.1.100
-            MQTT_PORT=1883
+MQTT_BROKER=192.168.1.100
+MQTT_PORT=1883
           \end{lstlisting}
         \end{exampleblock}
       \end{column}
@@ -394,21 +398,21 @@
       \begin{column}{0.48\textwidth}
         \begin{block}{Payload do ESP32 (hardware)}
           \begin{lstlisting}[style=json]
-            {
-              "uid": "A1 B2 C3 D4",
-              "timestamp": "1748900000"
-            }
+{
+  "dispositivo": "Esp32",
+  "uid": "A1 B2 C3 D4",
+  "timestamp": "1748900000"
+}
           \end{lstlisting}
         \end{block}
         \vspace{0.4em}
         \begin{block}{Payload do Simulador Python}
           \begin{lstlisting}[style=json]
-            {
-              "dispositivo": "Esp32",
-              "uid": "A1B2C3D4",
-              "status": "lido",
-              "timestamp": 1748900000
-            }
+{
+  "dispositivo": "Esp32",
+  "uid": "A1B2C3D4",
+  "timestamp": 1748900000
+}
           \end{lstlisting}
         \end{block}
       \end{column}
@@ -482,14 +486,15 @@
   %──────────────────────────────────────────────────────────────────────────────
   % SLIDE FINAL
   %──────────────────────────────────────────────────────────────────────────────
-  \begin{frame}{}
+  \begin{frame}{Slide Final}
     \begin{tikzpicture}[remember picture,overlay]
       \fill[azulP] (current page.south west) rectangle (current page.north east);
     \end{tikzpicture}
-    \centering\vspace{1.8em}
+    \centering
+    \vspace{1.8em}
     {\Huge\bfseries\color{white} Obrigado!}\\[1.0em]
     {\large\color{white!80} Projeto de Automa\c{c}\~{a}o II}\\[2.0em]
-    \vspace{1.2em}\\
+    \vspace{1.2em} 
     {\color{white!60}\small Quest\~{o}es?}
   \end{frame}
 
