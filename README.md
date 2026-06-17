@@ -9,6 +9,7 @@ Este repositório contém o código de um sistema IoT focado na leitura de tags 
 * **`sender.py`**: Script Python para simular a leitura de tags RFID (útil para testes sem hardware).
 * **`docker-compose.yml`** e **`conf/`**: Ficheiros para criar um broker MQTT Mosquitto local.
 * **`secrets.h`** *(não incluído no controlo de versões)*: Ficheiro no firmware contendo as credenciais de Wi-Fi e configurações do broker MQTT.
+* **`.env`** *(não incluído no controlo de versões)*: Ficheiro com as variáveis de ambiente para os scripts Python.
 
 ## Requisitos e Dependências
 
@@ -18,7 +19,9 @@ Este repositório contém o código de um sistema IoT focado na leitura de tags 
 
 ### Software
 * **Docker e Docker Compose** (para o broker local)
-* **Python** com a biblioteca `paho-mqtt` (`pip install paho-mqtt`)
+* **Python** com as bibliotecas:
+    * `paho-mqtt`
+    * `python-dotenv`
 * **Arduino IDE** com as bibliotecas:
     * `MFRC522`
     * `PubSubClient`
@@ -43,5 +46,14 @@ Este repositório contém o código de um sistema IoT focado na leitura de tags 
     * Compila e faz o upload para o ESP32.
 
 3.  **Scripts Python**
+    * Instala as dependências Python:
+        ```bash
+        pip install paho-mqtt python-dotenv
+        ```
+    * Cria um ficheiro chamado .env na raiz do projeto, com as seguintes definições:
+        ```python
+        MQTT_BROKER=ip.do.broker
+        MQTT_PORT=Porta.do.broker
+        ```
     * Para simular envios: `python sender.py`
     * Para receber dados: `python reciver.py`

@@ -1,0 +1,30 @@
+\frametitle{Formato de Dados -- JSON}
+\begin{columns}[T]
+      \begin{column}{0.48\textwidth}
+        \begin{block}{Payload do ESP32 (hardware)}
+          \begin{lstlisting}[style=json]
+            {
+              "uid": "A1 B2 C3 D4",
+              "timestamp": "1748900000"
+            }
+          \end{lstlisting}
+        \end{block}
+        \vspace{0.4em}
+        \begin{block}{Payload do Simulador Python}
+          \begin{lstlisting}[style=json]
+            {
+              "dispositivo": "Esp32",
+              "uid": "A1B2C3D4",
+              "status": "lido",
+              "timestamp": 1748900000
+            }
+          \end{lstlisting}
+        \end{block}
+      \end{column}
+      \begin{column}{0.50\textwidth}
+        \vspace{0.4em}
+        \begin{alertblock}{Persist\^{e}ncia}
+          O ficheiro \texttt{logs\_rfid.jsonl} pode ser ativado no recetor para guardar todas as leituras em disco.
+        \end{alertblock}
+      \end{column}
+    \end{columns}

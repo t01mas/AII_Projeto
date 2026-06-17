@@ -26,7 +26,7 @@ try:
 
         # Estrutura JSON adaptada ao RFID
         dados_sensor = {
-            "dispositivo": "esp32_rfid_1",
+            "dispositivo": "Esp32",
             "uid": tag_uid,
             "status": "lido",
             "timestamp": time_atual,
