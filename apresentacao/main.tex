@@ -134,7 +134,7 @@
           \item Capturar o UID de cart\~{o}es RFID com ESP32
           \item Sincronizar tempo via NTP
           \item Publicar dados JSON no broker MQTT
-          \item Receber e processar os dados em Python
+          \item Receber e processar os dados
           \item Simular leituras sem hardware f\'{i}sico
         \end{itemize}
       \end{block}
@@ -144,13 +144,12 @@
       \hspace{0.5cm}
       \begin{tikzpicture}
         \node[draw=azulP, fill=azulP!8, rounded corners=6pt,
-        minimum width=5cm, minimum height=5cm, thick] (caixa) {};
+        minimum width=5cm, minimum height=3.5cm, thick] (caixa) {};
         \node[font=\small\bfseries, text=azulP, above=-0.1cm of caixa.north]
         at ($(caixa.north)+(0,-0.5)$) {Casos de Uso};
         \foreach \i/\txt/\cor in {
           0/{Controlo de Acessos}/verde,
-          1/{Registo de Presen\c{c}as}/azulL,
-          2/{Invent\'{a}rio Industrial}/laranja%
+          1/{Controlo de inventário}/laranja%
         }{
           \node[draw=\cor, fill=\cor!12, rounded corners=4pt,
           minimum width=4.4cm, minimum height=0.75cm,
@@ -233,8 +232,8 @@
         \begin{itemize}\setlength{\itemsep}{2pt}
           \footnotesize
           \item \textbf{3.3V / GND:} Alimentação.
-          \item \textbf{RST (Pino 0):} Reset f\'{i}sico e \textit{power-down}.
-          \item \textbf{SDA/SS (Pino 5):} Seleção do Slave SPI.
+          \item \textbf{RST (Pino 4):} Reset f\'{i}sico e \textit{power-down}.
+          \item \textbf{NSS (Pino 5):} Seleção do Slave SPI.
           \item \textbf{SCK (Pino 18):} Sinal de Clock do SPI.
           \item \textbf{MISO (Pino 19):} Sa\'{i}da de dados do leitor para o ESP32.
           \item \textbf{MOSI (Pino 23):} Entrada de dados do ESP32 para o leitor.
@@ -433,12 +432,13 @@ MQTT_PORT=1883
       \begin{column}{0.50\textwidth}
         \begin{block}{O que foi implementado}
           \begin{itemize}
-            \item[$\checkmark$] Leitura de tags RFID (ESP32 + MFRC522)
+            \item[$\checkmark$] Leitura de tags RFID (ESP32 + LeitorRFID)
             \item[$\checkmark$] Sincroniza\c{c}\~{a}o de tempo via NTP
             \item[$\checkmark$] Publica\c{c}\~{a}o de JSON via MQTT
             \item[$\checkmark$] Broker local com Docker (Mosquitto)
             \item[$\checkmark$] Recetor Python
             \item[$\checkmark$] Simulador para testes sem hardware
+            \item[$\checkmark$] Dashboard (Node-RED / html)
           \end{itemize}
         \end{block}
       \end{column}
@@ -446,7 +446,6 @@ MQTT_PORT=1883
         \begin{alertblock}{Poss\'{i}veis Extens\~{o}es}
           \begin{itemize}
             \item Base de dados (InfluxDB / SQLite)
-            \item Dashboard (Grafana / Node-RED)
             \item Controlo de acesso com lista de UIDs
             \item Autentica\c{c}\~{a}o MQTT com TLS
             \item M\'{u}ltiplos leitores em paralelo
