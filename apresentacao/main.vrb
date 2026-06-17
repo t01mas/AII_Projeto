@@ -24,7 +24,7 @@
       \begin{column}{0.50\textwidth}
         \vspace{0.4em}
         \begin{alertblock}{Persist\^{e}ncia}
-          O ficheiro \texttt{logs\_rfid.jsonl} pode ser ativado no recetor para guardar todas as leituras em disco.
+          O ficheiro \texttt{logs\_rfid.jsonl} pode ser ativado no recetor para guardar todas as leituras no disco.
         \end{alertblock}
       \end{column}
     \end{columns}

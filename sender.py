@@ -6,7 +6,6 @@ import paho.mqtt.client as mqtt
 from dotenv import load_dotenv
 
 load_dotenv()
-
 BROKER = os.getenv("MQTT_BROKER", "127.0.0.1")
 PORT = int(os.getenv("MQTT_PORT", 1883))
 

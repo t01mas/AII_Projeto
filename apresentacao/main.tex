@@ -282,7 +282,7 @@ client.publish("aii/projeto/rfid", payload.c_str());
             \node[passo,below=0.28cm of r,
             draw=laranja,fill=laranja!10,
             text=laranja!80!black]            (p) {5. Publicar JSON};
-            \node[passo,below=0.28cm of p]          (h) {6. Halt + Stop Crypto};
+            \node[passo,below=0.28cm of p]          (h) {6. Espera para não ler 2 vezes};
 
             \draw[seta] (w)--(n);
             \draw[seta] (n)--(m);
@@ -308,9 +308,9 @@ client.publish("aii/projeto/rfid", payload.c_str());
         \begin{block}{O que \'{e} o MQTT?}
           \textbf{Message Queuing Telemetry Transport}
           \begin{itemize}
-            \item Protocolo \textbf{pub/sub} leve para IoT
-            \item Baixo consumo de banda e energia
-            \item Baseado em \textbf{t\'{o}picos} hier\'{a}rquicos
+            \item Protocolo \textbf{pub/sub}
+            \item Leve em termos de dados
+            \item Baseado em \textbf{t\'{o}picos}
           \end{itemize}
         \end{block}
         \vspace{0.4em}
@@ -418,7 +418,7 @@ MQTT_PORT=1883
       \begin{column}{0.50\textwidth}
         \vspace{0.4em}
         \begin{alertblock}{Persist\^{e}ncia}
-          O ficheiro \texttt{logs\_rfid.jsonl} pode ser ativado no recetor para guardar todas as leituras em disco.
+          O ficheiro \texttt{logs\_rfid.jsonl} pode ser ativado no recetor para guardar todas as leituras no disco.
         \end{alertblock}
       \end{column}
     \end{columns}
@@ -453,14 +453,13 @@ MQTT_PORT=1883
         \end{alertblock}
       \end{column}
     \end{columns}
-
     \vspace{0.7em}
     \centering
     \begin{tikzpicture}
       \node[draw=azulP,fill=azulP!10,rounded corners=6pt,
       minimum width=11cm,minimum height=0.9cm,
       font=\normalsize\bfseries,text=azulP]
-      {Tag RFID $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Python};
+      {Tag RFID $\rightarrow$ ESP32 $\rightarrow$ MQTT $\rightarrow$ Python / NodeRed};
     \end{tikzpicture}
   \end{frame}
 

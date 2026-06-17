@@ -1,0 +1,158 @@
+\documentclass[a4paper,12pt]{article}
+
+% PACOTES
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm]{geometry}
+\usepackage{graphicx}          % para inserir imagens
+\usepackage{amsmath}           % símbolos matemáticos
+\usepackage[colorlinks=true,
+            linkcolor=red,        % cor dos links internos
+            urlcolor=blue,         % cor dos links externos
+            ]{hyperref}  
+\usepackage{listings}          % para inserir código
+\usepackage{xcolor}            % cores no código
+\usepackage{indentfirst}
+
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{referencias.bib} % Substituir por nome exato do ficheiro .bib
+
+% CONFIGURAÇÃO DE CÓDIGO (Python, Bash, C++)
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    literate=
+     {á}{{\'a}}1 {à}{{\`a}}1 {ã}{{\~a}}1 {â}{{\^a}}1 {Á}{{\'A}}1 {À}{{\`A}}1 {Ã}{{\~A}}1 {Â}{{\^A}}1
+     {é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {É}{{\'E}}1 {È}{{\`E}}1 {Ê}{{\^E}}1
+     {í}{{\'i}}1 {ì}{{\`i}}1 {î}{{\^i}}1 {Í}{{\'I}}1 {Ì}{{\`I}}1 {Î}{{\^I}}1
+     {ó}{{\'o}}1 {ò}{{\`o}}1 {õ}{{\~o}}1 {ô}{{\^o}}1 {Ó}{{\'O}}1 {Ò}{{\`O}}1 {Õ}{{\~O}}1 {Ô}{{\^O}}1
+     {ú}{{\'u}}1 {ù}{{\`u}}1 {û}{{\^u}}1 {Ú}{{\'U}}1 {Ù}{{\`U}}1 {Û}{{\^U}}1
+     {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1,
+    extendedchars=true
+}
+
+% INFORMAÇÕES DO TRABALHO
+\title{\textbf{Automação II}}
+\author{Tomás Espincho -- 110486}
+\date{\today}
+
+\setlength{\parindent}{1.25cm}
+
+\begin{document}
+
+% CAPA
+\begin{titlepage}
+    \centering
+
+\noindent
+    \hfill
+    \includegraphics[width=0.30\textwidth]{./img/LogoUA.png}
+
+    \vspace{3cm}
+    
+    {\Huge \textbf{Trabalho de Automação}}\\[1cm]
+    {\large Licenciatura em Automação Industrial}\\[2cm]
+
+    % \includegraphics{imagem_capa.png} % Descomentar e adicionar imagem se pretendido
+    
+    \vfill
+
+    {\Large Tomás Espincho (110486)}\\[0.5cm]
+
+    {\large \today}\\[2cm]
+
+\end{titlepage}
+
+% INÍCIO DO TRABALHO
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introdução}
+
+Neste projeto, o objetivo consiste em desenvolver uma solução de automação utilizando a integração de múltiplas linguagens de programação. A arquitetura do sistema baseia-se em \textbf{Python} para a lógica de alto nível e processamento de dados, \textbf{C++} para o controlo de baixo nível e otimização de desempenho, e \textbf{Bash} para a orquestração e automação da execução dos vários processos.
+
+[Espaço para descrever a arquitetura do projeto, os objetivos propostos e os resultados esperados...]
+
+\section{Explicação do Código}
+O código desenvolvido neste trabalho é apresentado e explicado nas subsecções seguintes, divididas por linguagem de programação.
+
+\subsection{Scripts em Bash}
+Os scripts em Bash foram utilizados para inicializar o ambiente e lançar os respetivos processos e contentores necessários.
+
+\begin{lstlisting}[language=bash, caption = {Script de inicialização do sistema}]
+#!/bin/bash
+# Exemplo de inicialização
+echo "A iniciar o sistema de automação..."
+# docker-compose up -d
+./start_services.sh
+\end{lstlisting}
+
+[Espaço para explicar a lógica do script de orquestração...]
+
+\subsection{Implementação em C++}
+A camada de C++ foi desenvolvida para garantir o controlo em tempo real dos dispositivos de hardware, comunicando através de protocolos específicos.
+
+\begin{lstlisting}[language=C++, caption = {Leitura de sensores e atuação no hardware}]
+#include <iostream>
+
+int main() {
+    // Exemplo de inicialização de rotinas de controlo
+    std::cout << "Módulo de controlo C++ iniciado." << std::endl;
+    
+    // Lógica de controlo...
+    return 0;
+}
+\end{lstlisting}
+
+[Espaço para detalhar as funções de C++, gestão de memória e comunicação...]
+
+\subsection{Lógica de Processamento em Python}
+O Python é responsável por agregar os dados, correr os algoritmos de decisão e disponibilizar as informações via serviços de rede ou MQTT.
+
+\begin{lstlisting}[language=Python, caption={Recolha de dados e processamento}]
+import time
+
+def processar_dados():
+    # Exemplo de processamento
+    print("A processar os dados provenientes do módulo C++...")
+    time.sleep(1)
+
+if __name__ == "__main__":
+    processar_dados()
+\end{lstlisting}
+
+[Espaço para explicar as bibliotecas utilizadas, fluxos de dados e integração com brokers...]
+
+\section{Resultados e Discussão}
+
+[Espaço para apresentar os resultados obtidos, possíveis gráficos de desempenho, problemas encontrados e como foram resolvidos...]
+
+\section{Conclusão}
+
+[Espaço para um resumo do trabalho desenvolvido e possíveis perspetivas futuras para melhorar o sistema...]
+
+\newpage
+\printbibliography[heading=bibintoc, title={Referências}]
+
+\end{document}
