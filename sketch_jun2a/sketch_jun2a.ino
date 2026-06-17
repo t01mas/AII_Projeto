@@ -8,7 +8,7 @@
 #include <PubSubClient.h>
 
 #define SS_PIN  5
-#define RST_PIN 0
+#define RST_PIN 4
 
 unsigned long timeStamp;
 
@@ -29,7 +29,7 @@ void reconnect() {
     } else {
       Serial.print("Erro a conectar: ");
       Serial.print(client.state());
-      Serial.println(" Nova tentativa em 5s...");
+      Serial.println("Nova tentativa em 5s...");
       delay(5000);
     }
   }
