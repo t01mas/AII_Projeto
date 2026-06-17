@@ -1,5 +1,5 @@
-version: '3.8'
 services:
+  
   mosquitto:
     image: eclipse-mosquitto:latest
     container_name: mosquitto_aii
@@ -8,3 +8,21 @@ services:
     volumes:
       - ./conf/mosquitto.conf:/mosquitto/config/mosquitto.conf
     restart: unless-stopped
+
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered_aii
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./conf/node_red_data:/data
+    restart: unless-stopped
+
+  nginx:
+      image: nginx:alpine
+      ports:
+        - "80:80"
+      volumes:
+        - ./conf:/usr/share/nginx/html:ro,zh
+        - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro,z
+      restart: unless-stopped

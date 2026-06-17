@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Node-RED WebSocket Client</title>
+  <style>
+    body { font-family: sans-serif; }
+    table { border-collapse: collapse; width: 300px; text-align: left; margin-top: 10px; }
+    th, td { border: 1px solid black; padding: 8px; }
+  </style>
+</head>
+<body>
+  <h2>RFID</h2>
+  <table id="dataTable">
+    <tr>
+      <th>Time</th>
+      <th>Data</th>
+    </tr>
+  </table>
+
+  <script>
+    const ws = new WebSocket('ws://localhost:1880/dados'); 
+    
+    const table = document.getElementById('dataTable');
+
+    ws.onmessage = (event) => {
+      const row = table.insertRow(-1);
+      const timeCell = row.insertCell(0);
+      const valueCell = row.insertCell(1);
+      
+      timeCell.innerText = new Date().toLocaleTimeString(undefined, { hour12: false });
+
+      try {
+        const data = JSON.parse(event.data);
+        valueCell.innerText = JSON.stringify(data);
+      } catch (e) {
+        valueCell.innerText = event.data;
+      }
+    };
+
+    ws.onopen = () => console.log('Connected to Node-RED');
+    ws.onerror = (error) => console.error('WebSocket Error:', error);
+  </script>
+</body>
+</html>

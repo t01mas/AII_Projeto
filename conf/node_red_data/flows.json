@@ -1,0 +1,107 @@
+[
+    {
+        "id": "89454ea1a3c8185e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "fd3922992ff193c2",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "ims.mec.ua.pt",
+        "port": "82",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "743068f0996af91e",
+        "type": "websocket-listener",
+        "path": "/dados",
+        "wholemsg": "false"
+    },
+    {
+        "id": "fa96a298174e2b0b",
+        "type": "websocket-client",
+        "path": "ws://localhost:1880/dados",
+        "tls": "",
+        "wholemsg": "false",
+        "hb": "0",
+        "subprotocol": "",
+        "headers": []
+    },
+    {
+        "id": "f6b94579415da5fd",
+        "type": "mqtt in",
+        "z": "89454ea1a3c8185e",
+        "name": "",
+        "topic": "aii/projeto/rfid",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "fd3922992ff193c2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "5a23881bfeeb0d99",
+                "b1d0e8dbfef7c18b"
+            ]
+        ]
+    },
+    {
+        "id": "5a23881bfeeb0d99",
+        "type": "debug",
+        "z": "89454ea1a3c8185e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b1d0e8dbfef7c18b",
+        "type": "websocket out",
+        "z": "89454ea1a3c8185e",
+        "name": "",
+        "server": "743068f0996af91e",
+        "client": "",
+        "x": 450,
+        "y": 300,
+        "wires": []
+    }
+]
