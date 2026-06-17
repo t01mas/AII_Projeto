@@ -8,7 +8,7 @@ Este repositório contém o código de um sistema IoT focado na leitura de tags 
 * **`reciver.py`**: Script Python que subscreve o tópico MQTT e processa as leituras recebidas.
 * **`sender.py`**: Script Python para simular a leitura de tags RFID (útil para testes sem hardware).
 * **`docker-compose.yml`** e **`conf/`**: Ficheiros para criar um broker MQTT Mosquitto local.
-* **`secrets.h`** *(não incluído no controlo de versões)*: Ficheiro no firmware contendo as credenciais de Wi-Fi e configurações do broker MQTT.
+* **`secrets.h`** *(não incluído no controlo de versões)*: Ficheiro no programa principal que contem as credenciais de Wi-Fi e configurações do broker MQTT.
 * **`.env`** *(não incluído no controlo de versões)*: Ficheiro com as variáveis de ambiente para os scripts Python.
 
 ## Requisitos e Dependências
