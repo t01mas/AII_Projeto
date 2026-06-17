@@ -94,7 +94,7 @@ void loop() {
   String finalUID = tagUID.substring(1);
   Serial.println(finalUID);
 
-  String payload = "{\"uid\": \"" + finalUID + "\", \"timestamp\": \"" + String(timeStamp) + "\"}";
+  String payload = "{\"dispositivo\" : \"Esp32\", \"uid\": \"" + finalUID + "\", \"timestamp\": \"" + String(timeStamp) + "\"}";
   
   Serial.print("A enviar JSON: ");
   Serial.println(payload);
