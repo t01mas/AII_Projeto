@@ -16,5 +16,60 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{instructables_rc522_arduino}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Interfacing RC522 RFID Module With Arduino : 5 Steps - Instructables}
+      \verb{urlraw}
+      \verb https://www.instructables.com/Interfacing-RC522-RFID-Module-With-Arduino/
+      \endverb
+      \verb{url}
+      \verb https://www.instructables.com/Interfacing-RC522-RFID-Module-With-Arduino/
+      \endverb
+    \endentry
+    \entry{youtube_rfid_rc522}{misc}{}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Arduino RFID Module RC522 - How to Use - YouTube}
+      \verb{urlraw}
+      \verb https://www.youtube.com/watch?v=cFK87MJ96A8
+      \endverb
+      \verb{url}
+      \verb https://www.youtube.com/watch?v=cFK87MJ96A8
+      \endverb
+    \endentry
+    \entry{randomnerdtutorials_esp32_ntp}{misc}{}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{note}{Acedido em: \today}
+      \field{title}{Getting Date and Time with ESP32 (NTP Client) | Random Nerd Tutorials}
+      \verb{urlraw}
+      \verb https://randomnerdtutorials.com/esp32-ntp-client-date-time-arduino-ide/
+      \endverb
+      \verb{url}
+      \verb https://randomnerdtutorials.com/esp32-ntp-client-date-time-arduino-ide/
+      \endverb
+    \endentry
+    \entry{paulstoffregen_time_library}{misc}{}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{note}{Repositório GitHub}
+      \field{title}{PaulStoffregen/Time: Time library for Arduino}
+      \verb{urlraw}
+      \verb https://github.com/PaulStoffregen/Time/tree/master
+      \endverb
+      \verb{url}
+      \verb https://github.com/PaulStoffregen/Time/tree/master
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 
